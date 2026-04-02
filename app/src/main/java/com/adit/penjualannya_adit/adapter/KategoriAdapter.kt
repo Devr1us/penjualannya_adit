@@ -33,7 +33,6 @@ class KategoriAdapter(
         holder.tvKategori.text = item.namaKategori
         holder.tvAktif.text    = item.status
 
-        // Ubah warna/icon berdasarkan status
         if (item.status == "Aktif") {
             holder.tvAktif.setTextColor(
                 holder.itemView.context.getColor(android.R.color.holo_green_dark)
@@ -43,16 +42,15 @@ class KategoriAdapter(
             holder.tvAktif.setTextColor(
                 holder.itemView.context.getColor(android.R.color.holo_red_dark)
             )
-            holder.imgStatus.setImageResource(R.drawable.ceklist) // ganti dengan icon nonaktif jika ada
+            holder.imgStatus.setImageResource(R.drawable.close)
         }
 
-        holder.itemView.setOnClickListener       { onItemClick(item) }
-        holder.itemView.setOnLongClickListener   { onItemLongClick(item); true }
+        holder.itemView.setOnClickListener     { onItemClick(item) }
+        holder.itemView.setOnLongClickListener { onItemLongClick(item); true }
     }
 
     override fun getItemCount() = listKategori.size
 
-    // Filter untuk search
     fun filter(query: String, originalList: List<ModelKategori>) {
         listKategori = if (query.isEmpty()) {
             originalList.toMutableList()
@@ -64,7 +62,6 @@ class KategoriAdapter(
         notifyDataSetChanged()
     }
 
-    // Update data
     fun updateData(newList: List<ModelKategori>) {
         listKategori = newList.toMutableList()
         notifyDataSetChanged()
