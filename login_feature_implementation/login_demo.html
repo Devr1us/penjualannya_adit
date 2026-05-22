@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Autentikasi Penjualan Adit</title>
+    
+    <!-- Google Fonts: Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Premium Stylesheet -->
+    <style>
+        :root {
+            --primary: #9C27B0;
+            --primary-light: #CE93D8;
+            --secondary: #00BFA5;
+            --secondary-dark: #008786;
+            --background: #0f0c1b;
+            --card-bg: rgba(255, 255, 255, 0.08);
+            --card-border: rgba(255, 255, 255, 0.15);
+            --text-main: #ffffff;
+            --text-muted: #b0aec4;
+            --danger: #ff334b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        body {
+            background: radial-gradient(circle at 10% 20%, rgb(26, 20, 48) 0%, rgb(9, 7, 18) 90.2%);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        /* Beautiful Abstract Blobs for background depth */
+        .blob-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.2;
+        }
+
+        .blob-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--primary);
+            top: -100px;
+            left: -100px;
+            animation: float 15s ease-in-out infinite alternate;
+        }
+
+        .blob-2 {
+            width: 350px;
+            height: 350px;
+            background: var(--secondary);
+            bottom: -50px;
+            right: -50px;
+            animation: float 12s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(50px) scale(1.1); }
+        }
+
+        /* Premium Glassmorphic Card Wrapper */
+        .card-container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 460px;
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+        }
+
+        /* Card Header */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-icon {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 24px rgba(156, 39, 176, 0.3);
+            font-size: 32px;
+            animation: pulse 3s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); box-shadow: 0 8px 30px rgba(0, 191, 165, 0.4); }
+            100% { transform: scale(1); }
+        }
+
+        h2 {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff 60%, #ce93d8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        /* Form Controls */
+        .form-group {
+            position: relative;
+            margin-bottom: 22px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--primary-light);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+            color: var(--text-muted);
+        }
+
+        input {
+            width: 100%;
+            height: 52px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 0 16px 0 45px;
+            color: #ffffff;
+            font-size: 15px;
+            outline: none;
+        }
+
+        input:focus {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--secondary);
+            box-shadow: 0 0 12px rgba(0, 191, 165, 0.2);
+        }
+
+        /* Buttons with animations */
+        .btn {
+            width: 100%;
+            height: 52px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #ffffff;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), #8e24aa);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(156, 39, 176, 0.4);
+            filter: brightness(1.1);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 191, 165, 0.4);
+            filter: brightness(1.1);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, var(--danger), #e53935);
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 51, 75, 0.4);
+            filter: brightness(1.1);
+        }
+
+        /* Screen Switcher Taut Teks */
+        .switch-prompt {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .switch-link {
+            color: var(--secondary);
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .switch-link:hover {
+            text-decoration: underline;
+            color: var(--primary-light);
+        }
+
+        /* Dashboard UI custom styling */
+        .profile-info {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .profile-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .profile-row:last-child {
+            border-bottom: none;
+        }
+
+        .profile-label {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .profile-value {
+            font-size: 15px;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        /* Notification Toast */
+        .toast {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-left: 5px solid var(--secondary);
+            color: #ffffff;
+            padding: 16px 24px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transform: translateX(120%);
+            z-index: 1000;
+            font-weight: 500;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        /* Hidden class for single page view switching */
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Blobs Background -->
+    <div class="blob-container">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <!-- Main Card Container -->
+    <div class="card-container">
+        
+        <!-- Toast Notification -->
+        <div id="toast" class="toast">Notifikasi!</div>
+
+        <!-- ================= LOGIN VIEW ================= -->
+        <div id="loginView">
+            <div class="header">
+                <div class="logo-icon">🛍️</div>
+                <h2 id="loginTitle">Sistem Penjualan</h2>
+                <p class="subtitle">Silakan login untuk melanjutkan ke aplikasi</p>
+            </div>
+            
+            <form id="loginForm" onsubmit="event.preventDefault(); handleLogin();">
+                <div class="form-group">
+                    <label for="loginUsername">Username</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">👤</span>
+                        <input type="text" id="loginUsername" placeholder="Masukkan username" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">🔑</span>
+                        <input type="password" id="loginPassword" placeholder="Masukkan password" required>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Masuk</button>
+            </form>
+            
+            <div class="switch-prompt">
+                Belum punya akun? <span class="switch-link" onclick="switchView('register')">Daftar sekarang</span>
+            </div>
+        </div>
+
+        <!-- ================= REGISTER VIEW ================= -->
+        <div id="registerView" class="hidden">
+            <div class="header">
+                <div class="logo-icon">✨</div>
+                <h2>Buat Akun Baru</h2>
+                <p class="subtitle">Daftarkan akun untuk mengelola sistem penjualan</p>
+            </div>
+            
+            <form id="registerForm" onsubmit="event.preventDefault(); handleRegister();">
+                <div class="form-group">
+                    <label for="regNama">Nama Lengkap</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">📛</span>
+                        <input type="text" id="regNama" placeholder="Nama Lengkap Anda" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="regUsername">Username</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">👤</span>
+                        <input type="text" id="regUsername" placeholder="Pilih username unik" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="regEmail">Alamat Email</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">📧</span>
+                        <input type="email" id="regEmail" placeholder="nama@email.com" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="regPassword">Password</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">🔑</span>
+                        <input type="password" id="regPassword" placeholder="Minimal 6 karakter" required>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Daftar Baru</button>
+            </form>
+            
+            <div class="switch-prompt">
+                Sudah punya akun? <span class="switch-link" onclick="switchView('login')">Login disini</span>
+            </div>
+        </div>
+
+        <!-- ================= ACCOUNT VIEW ================= -->
+        <div id="accountView" class="hidden">
+            <div class="header">
+                <div class="logo-icon">🌟</div>
+                <h2 id="welcomeGreeting">Selamat Datang!</h2>
+                <p class="subtitle">Kelola informasi akun Anda di bawah ini</p>
+            </div>
+            
+            <div class="profile-info">
+                <div class="profile-row">
+                    <span class="profile-label">Nama Lengkap</span>
+                    <span class="profile-value" id="profileName">Adit</span>
+                </div>
+                <div class="profile-row">
+                    <span class="profile-label">Username</span>
+                    <span class="profile-value" id="profileUsername">@adit_admin</span>
+                </div>
+                <div class="profile-row">
+                    <span class="profile-label">Alamat Email</span>
+                    <span class="profile-value" id="profileEmail">adit@email.com</span>
+                </div>
+                <div class="profile-row">
+                    <span class="profile-label">Status Sesi</span>
+                    <span class="profile-value" style="color: var(--secondary);">Aktif (Persistent)</span>
+                </div>
+            </div>
+            
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+                <button onclick="switchAccount()" class="btn btn-secondary">Daftar / Masuk Akun Lain</button>
+                <button onclick="handleLogout()" class="btn btn-danger">Keluar dari Akun</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Script Handling Login, Register, Session & View Switching -->
+    <script>
+        // Simulasi Database Pengguna (disimpan di LocalStorage agar persistent)
+        if (!localStorage.getItem('database_users')) {
+            const defaultUsers = {
+                'adit': { nama: 'Adit Firmansyah', username: 'adit', email: 'adit@email.com', password: 'password123' }
+            };
+            localStorage.setItem('database_users', JSON.stringify(defaultUsers));
+        }
+
+        // Cek Sesi saat Halaman Pertama Kali Dibuka
+        window.onload = function() {
+            checkSession();
+        };
+
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.innerText = message;
+            toast.style.borderLeftColor = type === 'success' ? 'var(--secondary)' : 'var(--danger)';
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        function checkSession() {
+            const loggedInUser = localStorage.getItem('logged_in_user');
+            if (loggedInUser) {
+                const users = JSON.parse(localStorage.getItem('database_users'));
+                const userData = users[loggedInUser];
+                
+                if (userData) {
+                    // Update profil view
+                    document.getElementById('welcomeGreeting').innerText = `Selamat Datang Kembali,\n${userData.nama}!`;
+                    document.getElementById('profileName').innerText = userData.nama;
+                    document.getElementById('profileUsername').innerText = `@${userData.username}`;
+                    document.getElementById('profileEmail').innerText = userData.email;
+                    
+                    switchView('account');
+                    showToast(`Sesi Aktif: Selamat datang kembali, ${userData.nama}!`);
+                }
+            } else {
+                switchView('login');
+            }
+        }
+
+        function switchView(viewName) {
+            document.getElementById('loginView').classList.add('hidden');
+            document.getElementById('registerView').classList.add('hidden');
+            document.getElementById('accountView').classList.add('hidden');
+
+            if (viewName === 'login') {
+                document.getElementById('loginView').classList.remove('hidden');
+            } else if (viewName === 'register') {
+                document.getElementById('registerView').classList.remove('hidden');
+            } else if (viewName === 'account') {
+                document.getElementById('accountView').classList.remove('hidden');
+            }
+        }
+
+        // Handler Login
+        function handleLogin() {
+            const usernameInput = document.getElementById('loginUsername').value.trim();
+            const passwordInput = document.getElementById('loginPassword').value.trim();
+            
+            const users = JSON.parse(localStorage.getItem('database_users'));
+            
+            if (users[usernameInput]) {
+                if (users[usernameInput].password === passwordInput) {
+                    // Simpan sesi
+                    localStorage.setItem('logged_in_user', usernameInput);
+                    checkSession();
+                } else {
+                    showToast('Password yang Anda masukkan salah!', 'danger');
+                }
+            } else {
+                showToast('Username tidak terdaftar! Silakan mendaftar dahulu.', 'danger');
+            }
+        }
+
+        // Handler Registrasi
+        function handleRegister() {
+            const nama = document.getElementById('regNama').value.trim();
+            const username = document.getElementById('regUsername').value.trim().toLowerCase();
+            const email = document.getElementById('regEmail').value.trim();
+            const password = document.getElementById('regPassword').value.trim();
+
+            if (password.length < 6) {
+                showToast('Password minimal harus 6 karakter!', 'danger');
+                return;
+            }
+
+            const users = JSON.parse(localStorage.getItem('database_users'));
+
+            if (users[username]) {
+                showToast(`Username '${username}' sudah digunakan!`, 'danger');
+            } else {
+                // Simpan user baru ke simulasi database
+                users[username] = { nama, username, email, password };
+                localStorage.setItem('database_users', JSON.stringify(users));
+                
+                showToast('Registrasi Berhasil! Silakan masuk ke akun Anda.', 'success');
+                
+                // Reset form registrasi
+                document.getElementById('registerForm').reset();
+                
+                // Alihkan kembali ke login
+                switchView('login');
+                
+                // Isi otomatis username di login form untuk memudahkan user
+                document.getElementById('loginUsername').value = username;
+                document.getElementById('loginPassword').focus();
+            }
+        }
+
+        // Handler Logout
+        function handleLogout() {
+            localStorage.removeItem('logged_in_user');
+            showToast('Berhasil keluar dari akun.', 'success');
+            
+            // Reset input login
+            document.getElementById('loginForm').reset();
+            switchView('login');
+        }
+
+        // Handler Daftar/Masuk Akun Lain
+        function switchAccount() {
+            localStorage.removeItem('logged_in_user');
+            showToast('Menyiapkan pendaftaran akun baru...', 'success');
+            
+            document.getElementById('registerForm').reset();
+            switchView('register');
+        }
+    </script>
+</body>
+</html>
