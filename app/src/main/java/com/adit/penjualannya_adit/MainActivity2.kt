@@ -13,20 +13,24 @@ class MainActivity2 : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main2)
 
-        // --- TES KONEKSI FIREBASE ---
+        // --- TES KONEKSI FIREBASE (Optional) ---
         val database = FirebaseDatabase.getInstance()
         val myRef = database.getReference("tes_koneksi")
-        myRef.setValue("Berhasil Terhubung ke Firebase dari MainActivity2!")
-            .addOnSuccessListener {
-                Toast.makeText(this, "Koneksi Firebase Berhasil!", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener { e ->
-                Toast.makeText(this, "Koneksi Firebase Gagal: ${e.message}", Toast.LENGTH_LONG).show()
-            }
-        // ----------------------------
+        myRef.setValue("Berhasil Terhubung ke Firebase!")
 
+        // Menu Akun
+        findViewById<CardView>(R.id.cardAkun).setOnClickListener {
+            startActivity(Intent(this, AkunActivity::class.java))
+        }
+
+        // Menu Kategori
         findViewById<CardView>(R.id.cardKategori).setOnClickListener {
             startActivity(Intent(this, DataKategoriActivity::class.java))
+        }
+
+        // Menu Produk (Tambah Produk)
+        findViewById<CardView>(R.id.cardProduk).setOnClickListener {
+            startActivity(Intent(this, TambahProduk::class.java))
         }
     }
 }

@@ -22,7 +22,16 @@
     <string name="error_field_required">Field ini wajib diisi</string>
     <string name="error_invalid_email">Format email tidak valid</string>
 
-    <!-- IMPORTANT: Ganti ini dengan Web Client ID dari google-services.json Anda (client_type: 3) -->
+    <!-- Profile -->
+    <string name="title_profile">Profil Akun</string>
+    <string name="profile_name_format">Nama: %1$s</string>
+    <string name="profile_email_format">Email: %1$s</string>
+    <string name="profile_uid_format">UID: %1$s</string>
+    <string name="profile_not_found">Data tidak ditemukan</string>
+    <string name="error_load_profile">Gagal memuat profil</string>
+    <string name="btn_logout">KELUAR</string>
+
+    <!-- IMPORTANT: Ganti ini dengan Web Client ID dari file google-services.json Anda (client_type: 3) -->
     <string name="default_web_client_id">YOUR_WEB_CLIENT_ID_HERE.apps.googleusercontent.com</string>
 
     <!-- UI Dashboard & Produk -->

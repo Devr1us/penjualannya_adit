@@ -13,7 +13,10 @@ import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
-import com.google.firebase.auth.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.database.FirebaseDatabase
 
 class RegisterActivity : AppCompatActivity() {
@@ -36,7 +39,7 @@ class RegisterActivity : AppCompatActivity() {
                 val account = task.getResult(ApiException::class.java)!!
                 firebaseAuthWithGoogle(account.idToken!!)
             } catch (e: ApiException) {
-                Toast.makeText(this, "Google Sign In Gagal", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Google sign in gagal", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -48,7 +51,6 @@ class RegisterActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
 
-        // Konfigurasi Google Sign In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
@@ -85,39 +87,34 @@ class RegisterActivity : AppCompatActivity() {
         val password = edtPassword.text.toString().trim()
         val confirm = edtConfirmPassword.text.toString().trim()
 
-        // VALIDASI INPUT
-        if (nama.isEmpty()) { edtNama.error = "Nama wajib diisi"; return }
+        if (nama.isEmpty()) { edtNama.error = getString(R.string.error_field_required); return }
         if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) { 
-            edtEmail.error = "Email tidak valid!"; return 
+            edtEmail.error = getString(R.string.error_invalid_email); return 
         }
         if (password.length < 6) { 
-            edtPassword.error = "Password minimal 6 karakter!"; return 
+            edtPassword.error = "Password minimal 6 karakter"; return 
         }
         if (password != confirm) { 
-            edtConfirmPassword.error = "Password tidak cocok!"; return 
+            edtConfirmPassword.error = getString(R.string.error_pass_mismatch); return 
         }
 
-        // PROSES KE FIREBASE AUTH
         auth.createUserWithEmailAndPassword(email, password)
             .addOnSuccessListener { result ->
                 val uid = result.user?.uid ?: return@addOnSuccessListener
                 val userData = mapOf("nama" to nama, "email" to email, "uid" to uid)
                 
-                // Simpan profil ke Database
                 database.reference.child("users").child(uid).setValue(userData)
                     .addOnSuccessListener {
-                        Toast.makeText(this, "Registrasi Berhasil!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, R.string.register_success, Toast.LENGTH_SHORT).show()
                         startActivity(Intent(this, MainActivity2::class.java))
                         finish()
                     }
             }
             .addOnFailureListener { e ->
-                // Mengubah kode angka menjadi pesan bahasa manusia
                 val errorMsg = when (e) {
-                    is FirebaseAuthUserCollisionException -> "Email sudah digunakan akun lain!"
+                    is FirebaseAuthUserCollisionException -> "Email sudah terdaftar!"
                     is FirebaseAuthWeakPasswordException -> "Password terlalu lemah!"
-                    is FirebaseAuthInvalidCredentialsException -> "Format email salah!"
-                    else -> "Registrasi Gagal: Cek koneksi internet Anda"
+                    else -> e.localizedMessage ?: "Registrasi Gagal"
                 }
                 Toast.makeText(this, errorMsg, Toast.LENGTH_LONG).show()
             }

@@ -17,7 +17,7 @@
         android:theme="@style/Theme.Penjualannya_adit"
         android:usesCleartextTraffic="true">
 
-        <!-- Login sebagai halaman pertama -->
+        <!-- 1. Halaman Login (Launcher) -->
         <activity
             android:name=".LoginActivity"
             android:exported="true">
@@ -27,16 +27,22 @@
             </intent-filter>
         </activity>
 
+        <!-- 2. Halaman Daftar -->
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />
 
-        <!-- Dashboard Utama -->
+        <!-- 3. Dashboard Utama -->
         <activity
             android:name=".MainActivity2"
             android:exported="false" />
 
-        <!-- Kategori -->
+        <!-- 4. Halaman Profil Akun -->
+        <activity
+            android:name=".AkunActivity"
+            android:exported="false" />
+
+        <!-- Fitur Kategori -->
         <activity
             android:name=".kategori.DataKategoriActivity"
             android:exported="false" />
@@ -47,7 +53,7 @@
             android:name=".kategori.DetailKategoriFragment"
             android:exported="false" />
 
-        <!-- Produk -->
+        <!-- Fitur Produk -->
         <activity
             android:name=".TambahProduk"
             android:exported="false" />
