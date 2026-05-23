@@ -1,40 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <!-- App Name -->
     <string name="app_name">PenjualanAdit</string>
 
-    <!-- Placeholder item produk -->
+    <!-- Login & Register -->
+    <string name="title_login">Selamat Datang</string>
+    <string name="subtitle_login">Masuk untuk mengelola penjualan</string>
+    <string name="title_register">Daftar Akun</string>
+    <string name="subtitle_register">Lengkapi data untuk mendaftar</string>
+    <string name="btn_login">MASUK</string>
+    <string name="btn_register">DAFTAR</string>
+    <string name="prompt_register">Belum punya akun? Daftar</string>
+    <string name="prompt_login">Sudah punya akun? Login</string>
+
+    <string name="login_success">Login Berhasil</string>
+    <string name="login_fail">Login Gagal: %1$s</string>
+    <string name="register_success">Registrasi Berhasil</string>
+    <string name="register_fail">Registrasi Gagal: %1$s</string>
+
+    <string name="error_email_pass_required">Email dan Password harus diisi</string>
+    <string name="error_pass_mismatch">Password tidak cocok</string>
+    <string name="error_field_required">Field ini wajib diisi</string>
+    <string name="error_invalid_email">Format email tidak valid</string>
+
+    <!-- IMPORTANT: Ganti ini dengan Web Client ID dari google-services.json Anda (client_type: 3) -->
+    <string name="default_web_client_id">YOUR_WEB_CLIENT_ID_HERE.apps.googleusercontent.com</string>
+
+    <!-- UI Dashboard & Produk -->
     <string name="desc_foto_produk">Foto Produk</string>
     <string name="placeholder_nama_produk">Nama Produk</string>
     <string name="placeholder_harga">Rp0</string>
     <string name="placeholder_kategori">Kategori</string>
     <string name="placeholder_stok">Tidak Terbatas</string>
     <string name="placeholder_cabang">Utama</string>
-
-    <!-- Status -->
     <string name="status_aktif">Aktif</string>
     <string name="status_nonaktif">Nonaktif</string>
-
-    <!-- Content description icon -->
     <string name="desc_kategori">Kategori</string>
     <string name="desc_stok">Stok</string>
     <string name="desc_cabang">Cabang</string>
     <string name="desc_status">Status</string>
-
-    <!-- Data Produk - Content Description -->
     <string name="desc_kembali">Kembali</string>
     <string name="desc_cari">Cari produk</string>
     <string name="desc_refresh">Refresh data</string>
     <string name="desc_tambah_produk">Tambah produk baru</string>
-
-    <!-- Data Produk - Hint -->
     <string name="hint_pencarian_produk">Cari produk…</string>
-
-    <!-- Data Produk - Chip Kategori -->
     <string name="chip_semua">Semua</string>
     <string name="chip_makanan">Makanan</string>
     <string name="chip_minuman">Minuman</string>
     <string name="chip_snack">Snack</string>
-
 </resources>

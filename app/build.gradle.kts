@@ -43,6 +43,8 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.firebase.database)
+    implementation(libs.firebase.auth)
+    implementation(libs.play.services.auth)
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.coordinatorlayout)
     implementation(libs.androidx.lifecycle.viewmodel)
