@@ -1,6 +1,51 @@
-# Penjualannya Adit - Android E-Commerce App
+# Penjualannya Adit - Aplikasi Kasir & Manajemen Toko Android
 
-Penjualannya Adit adalah aplikasi mobile e-commerce yang dibangun dengan **Kotlin** dan **Android Native** untuk menjual produk elektronik. Aplikasi ini dilengkapi dengan sistem autentikasi (login, register), manajemen akun, dan fitur e-commerce lengkap.
+**RiusShop** adalah aplikasi kasir dan manajemen toko berbasis Android yang dibangun dengan **Kotlin** dan **Firebase**. Aplikasi ini memudahkan pengelolaan transaksi penjualan, laporan, produk, pegawai, dan cabang toko secara real-time.
+
+## 📸 Screenshots
+
+<table>
+  <tr>
+    <td align="center"><b>Dashboard</b></td>
+    <td align="center"><b>Transaksi</b></td>
+    <td align="center"><b>Pesanan / Cart</b></td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/RiusShop1.jpeg" width="200"/></td>
+    <td><img src="screenshots/RiusShop2.jpeg" width="200"/></td>
+    <td><img src="screenshots/RiusShop3.jpeg" width="200"/></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Laporan Penjualan</b></td>
+    <td align="center"><b>Nota Transaksi</b></td>
+    <td align="center"><b>Daftar Menu / Produk</b></td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/RiusShop4.jpeg" width="200"/></td>
+    <td><img src="screenshots/RiusShop9.jpeg" width="200"/></td>
+    <td><img src="screenshots/RiusShop6.jpeg" width="200"/></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Pengelolaan Cabang</b></td>
+    <td align="center"><b>Pengelolaan Pegawai</b></td>
+    <td align="center"><b>Daftar Pegawai</b></td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/RiusShop5.jpeg" width="200"/></td>
+    <td><img src="screenshots/RiusShop8.jpeg" width="200"/></td>
+    <td><img src="screenshots/RiusShop10.jpeg" width="200"/></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Data Kategori</b></td>
+    <td align="center"><b>Pengaturan Printer</b></td>
+    <td align="center"></td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/RiusShop11.jpeg" width="200"/></td>
+    <td><img src="screenshots/RiusShop7.jpeg" width="200"/></td>
+    <td></td>
+  </tr>
+</table>
 
 ## 📋 Daftar Isi
 
@@ -15,35 +60,35 @@ Penjualannya Adit adalah aplikasi mobile e-commerce yang dibangun dengan **Kotli
 
 ## ✨ Fitur Utama
 
+### Kasir & Transaksi
+- 🛒 **Transaksi** - Tambah produk ke keranjang dan proses pembayaran tunai
+- 🧾 **Nota Transaksi** - Generate dan bagikan nota transaksi otomatis
+- 🖨️ **Cetak Struk** - Integrasi printer Bluetooth untuk cetak struk
+
+### Laporan & Analitik
+- 📊 **Laporan Penjualan** - Rekap pendapatan harian, mingguan, dan bulanan
+- 📦 **Produk Terjual** - Daftar produk terlaris hari ini
+- 💰 **Estimasi Pendapatan** - Tampilan estimasi pendapatan real-time di dashboard
+
+### Manajemen Toko
+- 🏷️ **Manajemen Produk** - Tambah, edit, hapus produk beserta stok dan harga
+- 📂 **Kategori Produk** - Kelola kategori dengan status aktif/nonaktif
+- 👥 **Manajemen Pegawai** - Data pegawai, jabatan, dan penempatan cabang
+- 🏢 **Manajemen Cabang** - Tambah dan kelola data cabang toko
+
 ### Autentikasi & Akun
-- 🔐 **Login Activity** - Halaman login dengan validasi username/password
-- 📝 **Register Activity** - Pendaftaran akun baru pengguna
-- 👤 **Account Activity** - Profil akun, logout, dan manajemen session
-- 💾 **Session Manager** - Persistent session menggunakan SharedPreferences
-
-### E-Commerce Features
-- 📱 Dashboard produk elektronik
-- 🛒 Keranjang belanja (Cart)
-- 💳 Sistem pembayaran
-- 📦 Tracking pesanan
-- ⭐ Rating & Review produk
-
-### UI/UX
-- 📱 Fully responsive design
-- 🎨 Material Design components
-- 🌙 Support untuk dark mode
-- ⚡ Smooth navigation & animations
+- 🔐 **Login** - Autentikasi pengguna dengan Firebase
+- 👤 **Profil Akun** - Manajemen akun dan session pengguna
 
 ## 🛠️ Tech Stack
 
 - **Language:** Kotlin
-- **Platform:** Android (API Level 21+)
+- **Platform:** Android (API Level 24+)
 - **Build System:** Gradle (Kotlin DSL)
-- **UI Framework:** Android Jetpack
-- **Architecture:** MVVM (Model-View-ViewModel)
-- **Local Storage:** SharedPreferences, SQLite
-- **Networking:** Retrofit, OkHttp
-- **JSON:** Gson/Moshi
+- **Backend:** Firebase (Firestore, Authentication, Storage)
+- **UI Framework:** Android Jetpack (RecyclerView, ViewBinding)
+- **Architecture:** MVVM
+- **Printer:** Bluetooth Thermal Printer integration
 - **Testing:** JUnit, Espresso
 
 ## ⚙️ Persyaratan Sistem
