@@ -56,6 +56,11 @@ class DataTransaksiActivity : AppCompatActivity() {
     private var selectedKategoriNama: String = "Semua"
     private var lastTransactionId: String? = null
 
+    // Kasir aktif diambil dari Firebase "employees" (pegawai) yang aktif=true
+    private data class ActiveKasir(val id: String, val nama: String)
+    private val activeKasirList = mutableListOf<ActiveKasir>()
+    private val kasirRotationPrefs by lazy { getSharedPreferences("kasir_rotation_prefs", MODE_PRIVATE) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -71,6 +76,7 @@ class DataTransaksiActivity : AppCompatActivity() {
         setupRecyclerViews()
         loadKategori()
         loadProduk()
+        loadKasirAktif()
         setupSearch()
         setupActions()
     }
@@ -95,11 +101,102 @@ class DataTransaksiActivity : AppCompatActivity() {
             startActivity(Intent(this, LaporanActivity::class.java))
         }
 
+
+
         findViewById<ImageView>(R.id.ivCart).setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.END)
         }
 
         btnCetakStruk.isEnabled = false
+    }
+
+    private fun defaultKasirName(): String {
+        val sm = SessionManager(this)
+        return sm.getName()?.takeIf { it.isNotBlank() }
+            ?: sm.getUsername()?.takeIf { it.isNotBlank() }
+            ?: "Kasir"
+    }
+
+    private fun loadKasirAktif() {
+        // Ambil dari node "employees" (dipakai di PegawaiActivity)
+        db.getReference("employees").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val kasirAktif = mutableListOf<ActiveKasir>()
+
+                for (snap in snapshot.children) {
+                    val id = snap.key ?: continue
+                    val aktif = snap.child("aktif").getValue(Boolean::class.java) ?: true
+                    if (!aktif) continue
+
+                    val nama = snap.child("nama").getValue(String::class.java) ?: continue
+                    val jabatan = (snap.child("jabatan").getValue(String::class.java) ?: "").trim()
+
+                    // Prioritas: yang jabatannya kasir (case-insensitive)
+                    if (jabatan.contains("kasir", ignoreCase = true)) {
+                        kasirAktif.add(ActiveKasir(id = id, nama = nama))
+                    }
+                }
+
+                // Jika tidak ada yang berjabatan "kasir", fallback: semua pegawai aktif
+                if (kasirAktif.isEmpty()) {
+                    for (snap in snapshot.children) {
+                        val id = snap.key ?: continue
+                        val aktif = snap.child("aktif").getValue(Boolean::class.java) ?: true
+                        if (!aktif) continue
+                        val nama = snap.child("nama").getValue(String::class.java) ?: continue
+                        kasirAktif.add(ActiveKasir(id = id, nama = nama))
+                    }
+                }
+
+                kasirAktif.sortBy { it.nama.lowercase(Locale.getDefault()) }
+
+                activeKasirList.clear()
+                activeKasirList.addAll(kasirAktif)
+            }
+
+            override fun onCancelled(error: DatabaseError) {}
+        })
+    }
+
+    /**
+     * Pilih kasir berdasarkan daftar kasir aktif.
+     * Jika kasir aktif > 1, maka 2 transaksi pertama untuk kasir[0], transaksi ke-3 & 4 kasir[1], dst (round-robin).
+     */
+    private fun pickKasirForTransaction(): ActiveKasir? {
+        if (activeKasirList.isEmpty()) return null
+        if (activeKasirList.size == 1) return activeKasirList.first()
+
+        val hash = activeKasirList.joinToString(",") { it.id }
+        val prefHash = kasirRotationPrefs.getString("rr_hash", null)
+
+        var index = kasirRotationPrefs.getInt("rr_index", 0)
+        var remaining = kasirRotationPrefs.getInt("rr_remaining", 2)
+
+        if (prefHash == null || prefHash != hash) {
+            // daftar kasir aktif berubah -> reset rotasi
+            index = 0
+            remaining = 2
+        }
+
+        if (index !in activeKasirList.indices) index = 0
+        if (remaining <= 0) remaining = 2
+
+        val chosen = activeKasirList[index]
+
+        // konsumsi 1 transaksi
+        remaining -= 1
+        if (remaining == 0) {
+            index = (index + 1) % activeKasirList.size
+            remaining = 2
+        }
+
+        kasirRotationPrefs.edit()
+            .putString("rr_hash", hash)
+            .putInt("rr_index", index)
+            .putInt("rr_remaining", remaining)
+            .apply()
+
+        return chosen
     }
 
     private fun setupRecyclerViews() {
@@ -275,6 +372,9 @@ class DataTransaksiActivity : AppCompatActivity() {
 
         val date = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date())
         val metodePembayaran = spinnerPembayaran.selectedItem.toString()
+        val kasirTerpilih = pickKasirForTransaction()
+        val kasirNama = kasirTerpilih?.nama ?: defaultKasirName()
+        val kasirId = kasirTerpilih?.id
 
         val transaksi = ModelTransaksi(
             idTransaksi       = id,
@@ -283,13 +383,14 @@ class DataTransaksiActivity : AppCompatActivity() {
             totalHarga        = subtotal,
             diskon            = 0,
             tanggal           = date,
-            namaPegawai       = "Kasir",
+            idPegawai         = kasirId,
+            namaPegawai       = kasirNama,
             metodePembayaran  = metodePembayaran
         )
 
         ref.child(id).setValue(transaksi).addOnSuccessListener {
             updateStock()
-            Toast.makeText(this, "Transaksi Berhasil", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Transaksi Berhasil (Kasir: $kasirNama)", Toast.LENGTH_LONG).show()
 
             lastTransactionId = id
             btnCetakStruk.isEnabled = true
