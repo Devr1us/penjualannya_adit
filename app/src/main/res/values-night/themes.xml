@@ -1,0 +1,15 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Base.Theme.Penjualannya_adit" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/md_theme_dark_primary</item>
+        <item name="android:statusBarColor">@color/md_theme_dark_surface</item>
+    </style>
+    <style name="Theme.Penjualannya_adit" parent="Base.Theme.Penjualannya_adit" />
+
+    <!-- Splash / Entrance screen (pakai logo aplikasi) -->
+    <style name="Theme.Penjualannya_adit.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/splash_background_dark</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/app_logo</item>
+        <item name="windowSplashScreenAnimationDuration">800</item>
+        <item name="postSplashScreenTheme">@style/Theme.Penjualannya_adit</item>
+    </style>
+</resources>

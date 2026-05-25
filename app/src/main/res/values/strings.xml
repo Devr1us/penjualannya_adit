@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">RiusShop</string>
+
+    <!-- Login & Register UI -->
+    <string name="title_login">Selamat Datang</string>
+    <string name="subtitle_login">Masuk untuk mengelola penjualan Anda</string>
+    <string name="title_register">Daftar Akun</string>
+    <string name="subtitle_register">Lengkapi data Anda untuk mendaftar</string>
+    <string name="btn_login">MASUK</string>
+    <string name="btn_register">DAFTAR</string>
+    <string name="prompt_register">Belum punya akun? Daftar Sekarang</string>
+    <string name="prompt_login">Sudah punya akun? Login di sini</string>
+    <string name="label_nama">Nama Lengkap</string>
+    <string name="label_email">Email</string>
+    <string name="label_password">Password</string>
+    <string name="label_confirm_password">Konfirmasi Password</string>
+
+    <!-- Profile UI -->
+    <string name="title_profile">Profil Pengguna</string>
+    <string name="profile_name_label">Nama Lengkap</string>
+    <string name="profile_email_label">Email</string>
+    <string name="profile_uid_label">User ID</string>
+    <string name="btn_logout">KELUAR</string>
+
+    <!-- Profile Formats & Placeholders -->
+    <string name="profile_name_format">%1$s</string>
+    <string name="profile_email_format">%1$s</string>
+    <string name="profile_uid_format">%1$s</string>
+    <string name="loading">Memuat…</string>
+    <string name="placeholder_email">Email…</string>
+    <string name="placeholder_uid">UID…</string>
+
+    <!-- Messages -->
+    <string name="login_success">Login Berhasil</string>
+    <string name="login_fail">Login Gagal: %1$s</string>
+    <string name="register_success">Registrasi Berhasil</string>
+    <string name="register_fail">Registrasi Gagal: %1$s</string>
+    <string name="error_email_pass_required">Email dan Password harus diisi</string>
+    <string name="error_pass_mismatch">Password tidak cocok</string>
+    <string name="error_field_required">Wajib diisi</string>
+    <string name="error_invalid_email">Format email salah</string>
+    <string name="error_short_pass">Password minimal 6 karakter</string>
+    <string name="profile_not_found">Profil tidak ditemukan</string>
+    <string name="error_load_profile">Gagal memuat data</string>
+
+    <!-- UI Dashboard & Produk -->
+    <string name="desc_foto_produk">Foto Produk</string>
+    <string name="placeholder_nama_produk">Nama Produk</string>
+    <string name="placeholder_harga">Rp0</string>
+    <string name="placeholder_kategori">Kategori</string>
+    <string name="placeholder_stok">Tidak Terbatas</string>
+    <string name="placeholder_cabang">Utama</string>
+    <string name="status_aktif">Aktif</string>
+    <string name="status_nonaktif">Nonaktif</string>
+    <string name="desc_kategori">Kategori</string>
+    <string name="desc_stok">Stok</string>
+    <string name="desc_cabang">Cabang</string>
+    <string name="desc_status">Status</string>
+    <string name="desc_kembali">Kembali</string>
+    <string name="desc_cari">Cari produk</string>
+    <string name="desc_refresh">Refresh data</string>
+    <string name="desc_tambah_produk">Tambah produk baru</string>
+    <string name="hint_pencarian_produk">Cari produk…</string>
+    <string name="chip_semua">Semua</string>
+    <string name="chip_makanan">Makanan</string>
+    <string name="chip_minuman">Minuman</string>
+    <string name="chip_snack">Snack</string>
+
+    <!-- Payment Methods -->
+    <string-array name="metode_pembayaran_array">
+        <item>Tunai</item>
+        <item>GoPay</item>
+        <item>DANA</item>
+        <item>ShopeePay</item>
+        <item>OVO</item>
+        <item>Transfer Bank</item>
+    </string-array>
+</resources>

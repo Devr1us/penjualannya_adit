@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="?android:colorBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pengelolaan Cabang"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Tambah, edit, dan hapus data cabang"
+            android:textColor="?android:textColorSecondary"
+            android:textSize="14sp" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="7dp"
+            app:cardBackgroundColor="?attr/colorSurface">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="22dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Form Cabang"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/edtNamaCabang"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_marginTop="18dp"
+                    android:hint="Nama cabang"
+                    android:backgroundTint="#5B5FEF"
+                    android:textColor="?android:textColorPrimary"
+                    android:textColorHint="?android:textColorSecondary" />
+
+                <EditText
+                    android:id="@+id/edtAlamatCabang"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_marginTop="14dp"
+                    android:hint="Alamat cabang"
+                    android:gravity="top"
+                    android:minLines="2"
+                    android:backgroundTint="#5B5FEF"
+                    android:textColor="?android:textColorPrimary"
+                    android:textColorHint="?android:textColorSecondary" />
+
+                <EditText
+                    android:id="@+id/edtTeleponCabang"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_marginTop="14dp"
+                    android:hint="Nomor telepon"
+                    android:inputType="phone"
+                    android:backgroundTint="#5B5FEF"
+                    android:textColor="?android:textColorPrimary"
+                    android:textColorHint="?android:textColorSecondary" />
+
+                <Button
+                    android:id="@+id/btnSimpanCabang"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_marginTop="22dp"
+                    android:text="Simpan Cabang"
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF"
+                    android:backgroundTint="#5B5FEF" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="Daftar Cabang"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerCabang"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp" />
+
+    </LinearLayout>
+
+</ScrollView>

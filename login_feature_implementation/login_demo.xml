@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<login_demo>
+    <metadata>
+        <title>Demo Autentikasi Penjualan Adit</title>
+        <language>id</language>
+        <charset>UTF-8</charset>
+        <viewport>
+            <width>device-width</width>
+            <initial-scale>1.0</initial-scale>
+        </viewport>
+    </metadata>
+    
+    <design>
+        <theme name="Premium Dark">
+            <colors>
+                <primary>#9C27B0</primary>
+                <primary_light>#CE93D8</primary_light>
+                <secondary>#00BFA5</secondary>
+                <secondary_dark>#008786</secondary_dark>
+                <background>#0f0c1b</background>
+                <card_bg>rgba(255, 255, 255, 0.08)</card_bg>
+                <card_border>rgba(255, 255, 255, 0.15)</card_border>
+                <text_main>#ffffff</text_main>
+                <text_muted>#b0aec4</text_muted>
+                <danger>#ff334b</danger>
+            </colors>
+            
+            <typography>
+                <font_family>Outfit, sans-serif</font_family>
+                <font_weights>
+                    <weight>300</weight>
+                    <weight>400</weight>
+                    <weight>500</weight>
+                    <weight>600</weight>
+                    <weight>700</weight>
+                    <weight>800</weight>
+                </font_weights>
+            </typography>
+            
+            <animations>
+                <animation name="float" duration="15s" timing="ease-in-out" direction="alternate">
+                    <keyframe at="0%">
+                        <transform>translateY(0) scale(1)</transform>
+                    </keyframe>
+                    <keyframe at="100%">
+                        <transform>translateY(50px) scale(1.1)</transform>
+                    </keyframe>
+                </animation>
+                <animation name="float-reverse" duration="12s" timing="ease-in-out" direction="alternate-reverse">
+                    <keyframe at="0%">
+                        <transform>translateY(0) scale(1)</transform>
+                    </keyframe>
+                    <keyframe at="100%">
+                        <transform>translateY(50px) scale(1.1)</transform>
+                    </keyframe>
+                </animation>
+            </animations>
+        </theme>
+        
+        <layout type="glassmorphic">
+            <card>
+                <max_width>460px</max_width>
+                <padding>40px</padding>
+                <border_radius>24px</border_radius>
+                <backdrop_filter>blur(16px)</backdrop_filter>
+                <border>
+                    <width>1px</width>
+                    <style>solid</style>
+                    <color>var(--card-border)</color>
+                </border>
+            </card>
+            
+            <blobs>
+                <blob id="blob-1">
+                    <width>400px</width>
+                    <height>400px</height>
+                    <background>var(--primary)</background>
+                    <position top="-100px" left="-100px"/>
+                    <filter>blur(80px)</filter>
+                    <opacity>0.2</opacity>
+                    <animation>float</animation>
+                </blob>
+                <blob id="blob-2">
+                    <width>350px</width>
+                    <height>350px</height>
+                    <background>var(--secondary)</background>
+                    <position bottom="-50px" right="-50px"/>
+                    <filter>blur(80px)</filter>
+                    <opacity>0.2</opacity>
+                    <animation>float-reverse</animation>
+                </blob>
+            </blobs>
+        </layout>
+    </design>
+    
+    <components>
+        <input_field id="username">
+            <label>Username</label>
+            <placeholder>Masukkan username terdaftar</placeholder>
+            <type>text</type>
+            <required>true</required>
+        </input_field>
+        
+        <input_field id="password">
+            <label>Password</label>
+            <placeholder>Masukkan password Anda</placeholder>
+            <type>password</type>
+            <required>true</required>
+        </input_field>
+        
+        <button id="login-btn">
+            <label>Masuk</label>
+            <action>authenticate</action>
+            <style>primary</style>
+        </button>
+        
+        <link id="register-link">
+            <label>Belum punya akun? Daftar di sini</label>
+            <action>navigate_to_register</action>
+        </link>
+    </components>
+    
+    <features>
+        <feature name="Session Management">
+            <description>Mengelola sesi login pengguna</description>
+            <status>enabled</status>
+        </feature>
+        <feature name="Firebase Authentication">
+            <description>Autentikasi menggunakan Firebase Realtime Database</description>
+            <status>enabled</status>
+        </feature>
+        <feature name="Responsive Design">
+            <description>Desain responsif untuk semua ukuran layar</description>
+            <status>enabled</status>
+        </feature>
+        <feature name="Modern UI">
+            <description>Glassmorphism dengan animated blobs dan premium styling</description>
+            <status>enabled</status>
+        </feature>
+    </features>
+    
+    <notes>
+        <note>Demo autentikasi login untuk aplikasi Penjualan Adit</note>
+        <note>Menggunakan Firebase untuk backend authentication</note>
+        <note>Desain modern dengan glassmorphism effect</note>
+        <note>Tersedia dalam bahasa Indonesia</note>
+    </notes>
+</login_demo>
