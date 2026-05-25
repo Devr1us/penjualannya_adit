@@ -10,10 +10,18 @@ import androidx.cardview.widget.CardView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.adit.penjualannya_adit.kategori.DataKategoriActivity
+import com.adit.penjualannya_adit.Model.ModelTransaksi
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import java.text.SimpleDateFormat
 import java.util.*
 
 class MainActivity2 : AppCompatActivity() {
+    
+    private lateinit var tvEstimasi: TextView
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -34,6 +42,12 @@ class MainActivity2 : AppCompatActivity() {
             else -> "Selamat Malam"
         }
         tvGreeting.text = "$greeting, Adit"
+        
+        // Inisialisasi TextView estimasi
+        tvEstimasi = findViewById(R.id.tvEstimasi)
+        
+        // Load estimasi pendapatan hari ini
+        loadEstimasiPendapatan()
 
         // Firebase tes koneksi
         FirebaseDatabase.getInstance().getReference("tes_koneksi").setValue("Berhasil")
@@ -73,5 +87,42 @@ class MainActivity2 : AppCompatActivity() {
         findViewById<CardView>(R.id.cardPrinter).setOnClickListener {
             startActivity(Intent(this, PrinterActivity::class.java))
         }
+    }
+
+    private fun loadEstimasiPendapatan() {
+        val ref = FirebaseDatabase.getInstance().getReference("transaksi")
+        ref.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var totalHariIni = 0
+                val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+                val now = Calendar.getInstance()
+                
+                for (snap in snapshot.children) {
+                    val transaksi = snap.getValue(ModelTransaksi::class.java)
+                    if (transaksi != null && transaksi.status == "Selesai") {
+                        try {
+                            val dateStr = transaksi.tanggal ?: continue
+                            val date = sdf.parse(dateStr) ?: continue
+                            val cal = Calendar.getInstance()
+                            cal.time = date
+                            
+                            val isSameYear = cal.get(Calendar.YEAR) == now.get(Calendar.YEAR)
+                            val isSameMonth = isSameYear && cal.get(Calendar.MONTH) == now.get(Calendar.MONTH)
+                            val isSameDay = isSameMonth && cal.get(Calendar.DAY_OF_MONTH) == now.get(Calendar.DAY_OF_MONTH)
+
+                            if (isSameDay) {
+                                totalHariIni += transaksi.subtotal
+                            }
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                }
+                
+                tvEstimasi.text = "Rp %,d".format(totalHariIni).replace(',', '.')
+            }
+
+            override fun onCancelled(error: DatabaseError) {}
+        })
     }
 }

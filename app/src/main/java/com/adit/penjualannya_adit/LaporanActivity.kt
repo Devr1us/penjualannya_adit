@@ -5,7 +5,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.adit.penjualannya_adit.Model.ModelTransaksi
+import com.adit.penjualannya_adit.Model.ItemProdukTerjual
+import com.adit.penjualannya_adit.adapter.AdapterProdukTerjual
 import com.google.firebase.database.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -18,6 +22,8 @@ class LaporanActivity : AppCompatActivity() {
     private lateinit var tvTransaksiMingguIni: TextView
     private lateinit var tvPendapatanBulanIni: TextView
     private lateinit var tvTransaksiBulanIni: TextView
+    private lateinit var rvProdukTerjual: RecyclerView
+    private lateinit var adapterProduk: AdapterProdukTerjual
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +38,12 @@ class LaporanActivity : AppCompatActivity() {
         tvTransaksiMingguIni = findViewById(R.id.tvTransaksiMingguIni)
         tvPendapatanBulanIni = findViewById(R.id.tvPendapatanBulanIni)
         tvTransaksiBulanIni = findViewById(R.id.tvTransaksiBulanIni)
+        rvProdukTerjual = findViewById(R.id.rvProdukTerjual)
+        
+        // Setup RecyclerView
+        rvProdukTerjual.layoutManager = LinearLayoutManager(this)
+        adapterProduk = AdapterProdukTerjual(emptyList())
+        rvProdukTerjual.adapter = adapterProduk
 
         loadDataFirebase()
     }
@@ -46,6 +58,7 @@ class LaporanActivity : AppCompatActivity() {
                 var countMingguIni = 0
                 var totalBulanIni = 0
                 var countBulanIni = 0
+                val produkTerjualMap = mutableMapOf<String, ItemProdukTerjual>()
 
                 val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
                 val now = Calendar.getInstance()
@@ -62,7 +75,7 @@ class LaporanActivity : AppCompatActivity() {
                             val isSameYear = cal.get(Calendar.YEAR) == now.get(Calendar.YEAR)
                             val isSameMonth = isSameYear && cal.get(Calendar.MONTH) == now.get(Calendar.MONTH)
                             val isSameWeek = isSameYear && cal.get(Calendar.WEEK_OF_YEAR) == now.get(Calendar.WEEK_OF_YEAR)
-                            val isSameDay = isSameYear && cal.get(Calendar.DAY_OF_YEAR) == now.get(Calendar.DAY_OF_YEAR)
+                            val isSameDay = isSameMonth && cal.get(Calendar.DAY_OF_MONTH) == now.get(Calendar.DAY_OF_MONTH)
 
                             val subtotal = transaksi.subtotal
                             
@@ -78,6 +91,32 @@ class LaporanActivity : AppCompatActivity() {
                                 totalHariIni += subtotal
                                 countHariIni++
                             }
+                            
+                            // Kumpulkan produk yang terjual hari ini
+                            if (isSameDay && transaksi.listProduk != null) {
+                                for (cartItem in transaksi.listProduk!!) {
+                                    val produk = cartItem.produk
+                                    if (produk != null) {
+                                        val key = produk.namaProduk
+                                        val existing = produkTerjualMap[key]
+                                        if (existing != null) {
+                                            produkTerjualMap[key] = ItemProdukTerjual(
+                                                namaProduk = produk.namaProduk,
+                                                jumlah = existing.jumlah + cartItem.jumlah,
+                                                hargaJual = produk.hargaJual,
+                                                totalHarga = existing.totalHarga + (produk.hargaJual.toInt() * cartItem.jumlah)
+                                            )
+                                        } else {
+                                            produkTerjualMap[key] = ItemProdukTerjual(
+                                                namaProduk = produk.namaProduk,
+                                                jumlah = cartItem.jumlah,
+                                                hargaJual = produk.hargaJual,
+                                                totalHarga = produk.hargaJual.toInt() * cartItem.jumlah
+                                            )
+                                        }
+                                    }
+                                }
+                            }
                         } catch (e: Exception) {
                             e.printStackTrace()
                         }
@@ -92,6 +131,10 @@ class LaporanActivity : AppCompatActivity() {
                 
                 tvPendapatanBulanIni.text = "Rp %,d".format(totalBulanIni).replace(',', '.')
                 tvTransaksiBulanIni.text = "$countBulanIni transaksi"
+                
+                // Update adapter dengan produk yang terjual
+                adapterProduk = AdapterProdukTerjual(produkTerjualMap.values.toList())
+                rvProdukTerjual.adapter = adapterProduk
             }
 
             override fun onCancelled(error: DatabaseError) {}
