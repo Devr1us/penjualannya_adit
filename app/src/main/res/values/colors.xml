@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- TokoKita Design Tokens (dipakai oleh layout baru) -->
+    <color name="primary_brand">#588A96</color>
+    <color name="brand_cream">#FDEBB3</color>
+    <color name="background_light">#FDF6E3</color>
+    <color name="primary_teal">#588A96</color>
+    <color name="background_gray">#FDF6E3</color>
+    <color name="text_dark">#333333</color>
+    <color name="text_gray">#757575</color>
+    <color name="surface_white">#FFFFFF</color>
+    <color name="summary_bg">#FFF9C4</color>
+    <color name="divider_color">#E0E0E0</color>
+    <color name="chip_unselected_bg">#E0E0E0</color>
+    <color name="green">#4CAF50</color>
+    <color name="red">#F44336</color>
+    <color name="green_status">#46923C</color>
+
+    <!-- Legacy colors agar tidak crash -->
+    <color name="purple_500">#9C27B0</color>
+    <color name="purple_200">#CE93D8</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+</resources>
