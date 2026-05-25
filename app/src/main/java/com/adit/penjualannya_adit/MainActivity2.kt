@@ -17,12 +17,15 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.text.SimpleDateFormat
 import java.util.*
 
 class MainActivity2 : AppCompatActivity() {
 
     private lateinit var tvEstimasi: TextView
+    private lateinit var tvDate: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +39,9 @@ class MainActivity2 : AppCompatActivity() {
 
         // Greeting dengan username dari SessionManager
         val tvGreeting = findViewById<TextView>(R.id.tvGreeting)
+        tvDate = findViewById(R.id.tvDate)
+        updateTanggalHariIni()
+
         val sessionManager = SessionManager(this)
         val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
         val greeting = when (hour) {
@@ -115,9 +121,22 @@ class MainActivity2 : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        // Pastikan tanggal selalu up-to-date saat kembali ke halaman Home
+        updateTanggalHariIni()
+    }
+
     private fun updateDarkModeIcon(iv: ImageView, isDark: Boolean) {
         iv.setImageResource(if (isDark) android.R.drawable.ic_menu_day else android.R.drawable.ic_menu_day)
         iv.alpha = if (isDark) 0.6f else 1.0f
+    }
+
+    private fun updateTanggalHariIni() {
+        // Format Indonesia: 25 Mei 2026
+        val localeId = Locale("id", "ID")
+        val formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", localeId)
+        tvDate.text = LocalDate.now().format(formatter)
     }
 
     private fun loadEstimasiPendapatan() {

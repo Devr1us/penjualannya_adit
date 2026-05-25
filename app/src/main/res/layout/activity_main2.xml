@@ -50,9 +50,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
-        android:text="04 Februari 2026"
+        android:text=""
         android:textColor="#D1FAE5"
         android:textSize="15sp"
+        tools:text="04 Februari 2026"
         app:layout_constraintStart_toStartOf="@id/tvGreeting"
         app:layout_constraintTop_toBottomOf="@id/tvGreeting" />
 

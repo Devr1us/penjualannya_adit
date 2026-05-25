@@ -2,6 +2,8 @@ package com.adit.penjualannya_adit
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -28,9 +30,12 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // Tampilkan splash/entrance (logo) saat app dibuka
-        installSplashScreen()
+        // Paksa tampil minimal ~1.2 detik agar "enterance" terasa (statis)
+        val splashScreen = installSplashScreen()
+        var keepSplashOn = true
+        splashScreen.setKeepOnScreenCondition { keepSplashOn }
+
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
 
         sessionManager = SessionManager(this)
 
@@ -44,11 +49,24 @@ class LoginActivity : AppCompatActivity() {
 
         // 1. Cek Sesi: Jika pengguna sudah login, langsung sambut dengan dashboard utama
         if (sessionManager.isLoggedIn()) {
-            Toast.makeText(this, "Selamat datang kembali, ${sessionManager.getName()}!", Toast.LENGTH_SHORT).show()
-            startActivity(Intent(this, MainActivity2::class.java))
-            finish()
+            Toast.makeText(
+                this,
+                "Selamat datang kembali, ${sessionManager.getName()}!",
+                Toast.LENGTH_SHORT
+            ).show()
+
+            // Tetap tampilkan splash dulu, lalu pindah tanpa menampilkan UI login
+            Handler(Looper.getMainLooper()).postDelayed({
+                keepSplashOn = false
+                startActivity(Intent(this, MainActivity2::class.java))
+                finish()
+            }, 1200)
             return
         }
+
+        // Jika belum login: tampilkan halaman login setelah splash selesai
+        setContentView(R.layout.activity_login)
+        Handler(Looper.getMainLooper()).postDelayed({ keepSplashOn = false }, 1200)
 
         // Inisialisasi UI View
         etUsername = findViewById(R.id.etUsername)
