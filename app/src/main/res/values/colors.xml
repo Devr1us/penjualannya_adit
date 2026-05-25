@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- TokoKita Design Tokens (dipakai oleh layout baru) -->
+    <color name="primary_brand">#588A96</color>
+    <color name="brand_cream">#FDEBB3</color>
+    <color name="background_light">#FDF6E3</color>
+    <color name="primary_teal">#588A96</color>
+    <color name="background_gray">#FDF6E3</color>
+    <color name="text_dark">#333333</color>
+    <color name="text_gray">#757575</color>
+    <color name="surface_white">#FFFFFF</color>
+    <color name="summary_bg">#FFF9C4</color>
+    <color name="divider_color">#E0E0E0</color>
+    <color name="chip_unselected_bg">#E0E0E0</color>
+    <color name="green">#4CAF50</color>
+    <color name="red">#F44336</color>
+    <color name="green_status">#46923C</color>
+
+    <!-- Legacy colors agar tidak crash -->
+    <color name="purple_500">#9C27B0</color>
+    <color name="purple_200">#CE93D8</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+
+    <!-- ═══════════════════════════════════════════
+         LIGHT MODE  –  Material3 Purple/Teal scheme
+         ═══════════════════════════════════════════ -->
+
+    <!-- Primary: Ungu / Purple -->
+    <color name="md_theme_primary">#7B3FA0</color>
+    <color name="md_theme_onPrimary">#FFFFFF</color>
+    <color name="md_theme_primaryContainer">#EEDCFF</color>
+    <color name="md_theme_onPrimaryContainer">#2C004E</color>
+
+    <!-- Secondary: Teal -->
+    <color name="md_theme_secondary">#006874</color>
+    <color name="md_theme_onSecondary">#FFFFFF</color>
+    <color name="md_theme_secondaryContainer">#97F0FF</color>
+    <color name="md_theme_onSecondaryContainer">#001F24</color>
+
+    <!-- Surface & Background (Light) -->
+    <color name="md_theme_surface">#FDFBFF</color>
+    <color name="md_theme_onSurface">#1C1B1F</color>
+    <color name="md_theme_surfaceVariant">#F0E4F5</color>
+    <color name="md_theme_onSurfaceVariant">#4D4458</color>
+    <color name="md_theme_outlineVariant">#CFC4D9</color>
+
+    <!-- ═══════════════════════════════════════════
+         DARK MODE  –  Material3 Purple/Teal scheme
+         ═══════════════════════════════════════════ -->
+
+    <!-- Primary dark -->
+    <color name="md_theme_dark_primary">#D7B4F8</color>
+    <color name="md_theme_dark_onPrimary">#3F0071</color>
+    <color name="md_theme_dark_primaryContainer">#5A2388</color>
+    <color name="md_theme_dark_onPrimaryContainer">#EEDCFF</color>
+
+    <!-- Secondary dark -->
+    <color name="md_theme_dark_secondary">#4FD8EB</color>
+    <color name="md_theme_dark_onSecondary">#00363D</color>
+    <color name="md_theme_dark_secondaryContainer">#004F57</color>
+    <color name="md_theme_dark_onSecondaryContainer">#97F0FF</color>
+
+    <!-- Surface & Background (Dark) -->
+    <color name="md_theme_dark_surface">#1C1B1F</color>
+    <color name="md_theme_dark_onSurface">#E6E1E5</color>
+    <color name="md_theme_dark_surfaceVariant">#2D2933</color>
+    <color name="md_theme_dark_onSurfaceVariant">#CFC4D9</color>
+    <color name="md_theme_dark_outlineVariant">#4D4458</color>
+
+    <!-- ═══════════════════════════════════════════
+         Semantic Colors (context-aware via selector)
+         ═══════════════════════════════════════════ -->
+    <color name="color_delete_btn">#E53935</color>
+    <color name="color_logout_btn">#C62828</color>
+</resources>

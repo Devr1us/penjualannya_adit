@@ -1,0 +1,6 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Base.Theme.Penjualannya_adit" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primary_brand</item>
+    </style>
+    <style name="Theme.Penjualannya_adit" parent="Base.Theme.Penjualannya_adit" />
+</resources>
